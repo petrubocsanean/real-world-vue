@@ -8,36 +8,23 @@
 <script>
 // @ is an alias to /src
 import EventCard from '@/components/EventCard.vue'
+import EventService from '../services/EventService'
 
 export default {
   name: 'EventList',
   data() {
     return {
-      events: [
-        {
-          id: 222,
-          category: 'test event',
-          title: 'test event title',
-          description: 'event description test',
-          location: 'Castelo Branco',
-          date: '02/02/2020',
-          time: '12:00',
-          petsAllowed: true,
-          organizer: 'John Doe'
-        },
-        {
-          id: 223,
-          category: 'test event 2',
-          title: 'test event title 2',
-          description: 'event description test',
-          location: 'Amsterdam',
-          date: '02/02/2020',
-          time: '12:00',
-          petsAllowed: true,
-          organizer: 'John Doe'
-        }
-      ]
+      events: null
     }
+  },
+  created() {
+    EventService.getEvents()
+      .then(res => {
+        this.events = res.data
+      })
+      .catch(err => {
+        console.log(err)
+      })
   },
   components: {
     EventCard
